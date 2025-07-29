@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 20:55:05 by achamdao          #+#    #+#             */
-/*   Updated: 2025/07/22 13:06:59 by achamdao         ###   ########.fr       */
+/*   Updated: 2025/07/29 15:05:23 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,22 +52,16 @@ char    stored_path_variable(t_info_cub *info_cub, char **matrex)
 
 char    parse_paths(t_info_cub *info_cub)
 {
-    int     i;
     char    **temp;
     char    *string;
 
-    i = 0;
-    while (info_cub->parts_file.part_paths[i])
-    {
-        string = ft_strtrim(info_cub->parts_file.part_paths[i], " \n", 0);
-        temp = split_in_two_parts(string, " ");
-        if (!temp)
-            return (free(string), 1);
-        if (stored_path_variable(info_cub, temp))
-            return (free_matrex(temp), free(string), 1);
-        free_matrex(temp);
-        free(string);
-        i++;
-    }
+    string = ft_strtrim(info_cub->line, " \n", 0);
+    temp = split_in_two_parts(string, " ");
+    if (!temp)
+        return (free(string), 1);
+    if (stored_path_variable(info_cub, temp))
+        return (free_matrex(&temp), free(string), 1);
+    free_matrex(&temp);
+    free(string);
     return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 12:09:28 by achamdao          #+#    #+#             */
-/*   Updated: 2025/07/22 13:06:49 by achamdao         ###   ########.fr       */
+/*   Updated: 2025/07/29 15:05:56 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,24 +51,18 @@ char    parse_colors(t_info_cub *info_cub)
     char    **temp;
     char    *string;
     char    **numbers;
-    int     i;
 
     numbers = NULL;
-    i = 0;
-    while (info_cub->parts_file.part_colors[i])
-    {
-        string = ft_strtrim(info_cub->parts_file.part_colors[i], " \n", 0);
-        temp = split_in_two_parts(string, " ");
-        if (!temp)
-            return (free(string), 1);
-        if (parse_string_colors(temp, &numbers))
-            return (free(string), free_matrex(temp), 1);
-        if (stored_struct_numbers(info_cub, temp[0], numbers))
-            return (free(string), free_matrex(temp), free_matrex(numbers), 1);
-        i++;
-        free(string);
-        free_matrex(temp);
-        free_matrex(numbers);
-    }
+    string = ft_strtrim(info_cub->line, " \n", 0);
+    temp = split_in_two_parts(string, " ");
+    if (!temp)
+        return (free(string), 1);
+    if (parse_string_colors(temp, &numbers))
+       return (free(string), free_matrex(&temp), 1);
+    if (stored_struct_numbers(info_cub, temp[0], numbers))
+        return (free(string), free_matrex(&temp), free_matrex(&numbers), 1);
+    free(string);
+    free_matrex(&temp);
+    free_matrex(&numbers);
     return (0);
 }

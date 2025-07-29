@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 12:14:54 by achamdao          #+#    #+#             */
-/*   Updated: 2025/07/22 13:06:07 by achamdao         ###   ########.fr       */
+/*   Updated: 2025/07/29 15:24:13 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,14 @@ void get_start_end(int *end, int *start, char *line)
     *start = start_pos;
 }
 
-char    check_with_hiegth_map(char *line, int index, int length_map)
+char    check_with_hiegth_map(char *line, int index, int length_map, int i)
 {
-    int i;
     int end;
     int start;
-
-    i = 0;
-    while (line[i])
+    if (index == 0 || (length_map - 1) == index)
     {
-        if (index == 0 || (length_map - 1) == index)
-        {
-            if (!(is_whitespace(line[i]) || line[i] == '1'))
-                return (1);
-        }
-        i++;
+       if (!(is_whitespace(line[i]) || line[i] == '1'))
+            return (1);
     }
     get_start_end(&end, &start, line);
     if (!((line[end] == '1' && line[start] == '1')))
@@ -55,69 +48,39 @@ char    check_with_hiegth_map(char *line, int index, int length_map)
     return (0);
 }
 
-char    check_empty_space_map_up(char *line, char **map, int index)
+char    check_empty_space_map_up(char *line, char **map, int index, size_t i)
 {
-    size_t i;
-
-    i = 0;
-    while (line[i])
+    if (index - 1 >= 0)
     {
-        if (line[i] == '0' || is_player_char(line[i]))
-        {
-            if (index - 1 >= 0)
-            {
-                if (i > ft_strlen(map[index - 1]) - 1)
-                    return (1);
-                else
-                    if (is_whitespace(map[index - 1][i]))
-                        return (1);
-            }
-            if (i - 1 >= 0)
-                if (is_whitespace(line[i - 1]))
-                    return (1);
-        }
-        i++;
+        if (i > ft_strlen(map[index - 1]) - 1)
+            return (1);
+        else
+            if (is_whitespace(map[index - 1][i]))
+                return (1);
     }
+    if (i > 0)
+        if (is_whitespace(line[i - 1]))
+            return (1);
     return (0);
 }
 
-char    check_empty_space_map(char *line, char **map, int index, int length_map)
+char    check_empty_space_map(int index, t_info_cub *info_cub, size_t i)
 {
-    size_t i;
-
-    i = 0;
-    while (line[i])
+    if (info_cub->line[i] == '0' || is_player_char(info_cub->line[i]))
     {
-        if (line[i] == '0' || is_player_char(line[i]))
+        if (index + 1 <= info_cub->length_map - 1)
         {
-            if (index + 1 <= length_map - 1)
-            {
-                if (i > ft_strlen(map[index + 1]) - 1)
-                    return (1);
-                else
-                    if (is_whitespace(map[index + 1][i]))
-                        return (1);
-            }
-            if (i + 1 <= (ft_strlen(line) - 1))
-                if (is_whitespace(line[i + 1]))
+            if (i > ft_strlen(info_cub->temp_map[index + 1]) - 1)
+                return (1);
+            else
+                if (is_whitespace(info_cub->temp_map[index + 1][i]))
                     return (1);
         }
-        i++;
+        if (i + 1 <= (ft_strlen(info_cub->line) - 1))
+            if (is_whitespace(info_cub->line[i + 1]))
+                return (1);
+        if (check_empty_space_map_up(info_cub->line, info_cub->temp_map, index, i))
+            return (1);
     }
-    return (check_empty_space_map_up(line, map, index));
-}
-
-char    base_parsing_map(char *line, char **map, int index, int length_map)
-{
-    if (count_char(line, '\n') > 1 || !ft_strcmp(line, "\n"))
-        return (1);
-    if (check_whitespace(line))
-        return (0);
-    if (check_correct_char(line))
-        return (1);
-    if (check_with_hiegth_map(line, index, length_map))
-        return (1);
-    if (check_empty_space_map(line, map, index, length_map))
-        return (1);
     return (0);
 }

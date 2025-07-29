@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 12:08:50 by achamdao          #+#    #+#             */
-/*   Updated: 2025/07/22 13:07:05 by achamdao         ###   ########.fr       */
+/*   Updated: 2025/07/29 15:07:28 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ char    parse_string_colors(char **temp, char ***numbers)
     if (!*numbers)
         return (1);
     if (trim_matrix(numbers, " "))
-        return (free_matrex(*numbers), 1);
+        return (free_matrex(numbers), 1);
     if (check_number_color(*numbers))
-        return (free_matrex(*numbers), 1);
+        return (free_matrex(numbers), 1);
     return  (0);
 }

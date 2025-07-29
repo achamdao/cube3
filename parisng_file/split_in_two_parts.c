@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:22:06 by achamdao          #+#    #+#             */
-/*   Updated: 2025/07/22 13:07:14 by achamdao         ###   ########.fr       */
+/*   Updated: 2025/07/29 15:06:37 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	stored_matrix(char **matrix, char *str, char *sep, int number_word)
 	{
 		matrix[1] = ft_strndup(&str[start], length);
 		if (!matrix[1])
-			return (free_matrex(matrix), 0);
+			return (free_matrex(&matrix), 0);
 	}
 	matrix[end] = NULL;
 	return (1);
