@@ -3,11 +3,6 @@ using namespace std;
 #include <cstdlib>
 #include <string>
 #include <ctime>
-int RandomNumber(int From, int To)
-{
-    int randNum = rand() % (To - From + 1) + From;
-    return randNum;
-}
 
 enum Operation {ADD = 1, SUB = 2, DIV = 3, MUL = 4, NOTFOUND = -1};
 
@@ -45,9 +40,14 @@ struct stGame
     stSettingRound SettingRound;
     stErrors Errors;
     int Result = 0;
-   
+    
 };
 
+int RandomNumber(int From, int To)
+{
+    int randNum = rand() % (To - From + 1) + From;
+    return randNum;
+}
 string InputString(const string &Message, string &Status)
 {
     string Input = "0";
