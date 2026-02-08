@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 15:40:27 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/08 18:02:03 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/08 19:01:33 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ class clsMainProcess
         void PartCGI();
         void PartDeleteMethod();
         void PartPOSMethod();
-        std::string MakeOutoIndex(std::string NamesFiles);
+        void MakeOutoIndex(std::string NamesFiles);
         void PartNormalResponse();
         void MainProcess();
 }

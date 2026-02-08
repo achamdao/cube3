@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 15:43:09 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/08 18:49:56 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/08 19:01:46 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void clsMainProcess::PartPOSMethod()
     Response.MakeResponse(Status, Data, ); 
 }
 
-std::string clsMainProcess::MakeOutoIndex(std::string NamesFiles)
+void clsMainProcess::MakeOutoIndex(std::string NamesFiles)
 {
     
 }
