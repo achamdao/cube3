@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 15:43:09 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/08 18:22:26 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/08 18:49:56 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void clsMainProcess::MainProcess()
 {
     if (Data.location)
         PartRedirection();
-    else if (Data.permission | Data.Method != Data.Method)
+    else if ((Data.permission | Data.Method )!= Data.Method)
         PartPermission();
     else if (Data.RunCGI)
         PartCGI();
