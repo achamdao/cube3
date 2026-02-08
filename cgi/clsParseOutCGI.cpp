@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 14:39:45 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/06 15:44:06 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/07 11:04:20 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ std::string clsParseOutCGI::Connection(bool Isclose)
 
 std::string clsParseOutCGI::HeaderResponseCGI()
 {
-    std::stringstream Headers; 
+    std::stringstream Headers;
     std::map <std::string, std::string>::iterator HEAD;
     if (!_HeadersField.count("location"))
     {

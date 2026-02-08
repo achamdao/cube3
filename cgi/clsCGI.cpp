@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 14:40:02 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/06 16:21:24 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/08 17:31:49 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,22 @@ int clsCGI::RunCGI(std::string NameFile, clsData Data, int TimeOut)
 {
     int status;
     int exit_code;
+    int Fd = -1;
     int pip[2] = {-1,-1};
     if (pipe(pip) == -1)
         return -500;
-    _StartTime = getCurrentTime();
+    Fd = open(NameFile.c_str(), O_RDONLY, 644);
+    if (Fd < 0)
+        return -500;
+    _StartTime = GetCurrentTime();
     _PIDCHILD = fork();
     if (_PIDCHILD < 0)
-        return (close(fd1), -500);
+        return (close(Fd), -500);
     if (_PIDCHILD == 0)
     {
         close(pip[0]);
         if (dup2(pip[1], 1) == -1)
-            return (close(fd1), -1);
+            return (close(Fd), -1);
         close(pip[1]);
         if (chdir(Data.GetFolder()) < 0)
             return (-1);
@@ -44,13 +48,13 @@ int clsCGI::RunCGI(std::string NameFile, clsData Data, int TimeOut)
     else
     {
         close(pip[1]);
-        exit_code = waitpid(p, &status, WNOHANG);
+        exit_code = waitpid(_PIDCHILD, &status, WNOHANG);
         if (exit_code < 0)
-            return (close(pip[0]), -500);
+            return (close(pip[0]), close(Fd),-500);
         else if (WEXITSTATUS(status) == 1)
-            return (close(pip[0]), -500);
+            return (close(pip[0]),close(Fd), -500);
         else if (exit_code > 0)
-            break;
+            return (close(Fd), pip[0]);
     }
-    return pip[0];
+    return 0;
 }

@@ -6,13 +6,13 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:22:46 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/06 16:18:33 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/08 17:25:04 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # ifndef WEBSERV_HPP
 # define WEBSERV_HPP
-enum eMod{STATIC, ERROR, UPLOAD,AUTOINDEX, DIRECTION, DELETE, CHUNK, CGI};
+enum eMod{STATIC, ERROR, UPLOAD, AUTOINDEX, DIRECTION, DELETE, CHUNK, CGI};
 #include "../response/clsErrorPage.hpp"
 #include "../response/clsResponse.hpp"
 #include "../cgi/clsParseOutCGI.hpp"
@@ -24,5 +24,6 @@ enum eMod{STATIC, ERROR, UPLOAD,AUTOINDEX, DIRECTION, DELETE, CHUNK, CGI};
 #include <iostream>
 #include <sstream>
 #include <map>
+#include <sys/time.h>
 
 #endif
