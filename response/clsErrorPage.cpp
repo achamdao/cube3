@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:48:27 by achamdao          #+#    #+#             */
-/*   Updated: 2026/01/20 19:38:42 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/09 20:07:01 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
  clsErrorPage::clsErrorPage()
 {
-     StoredBodys();
-     StoredMessage();
+    _Type = "";
+    _Status = 0;
+    StoredBodys();
+    StoredMessage();
 }
 
 std::string clsErrorPage::GetStatusMessage(int Status) 
@@ -23,6 +25,10 @@ std::string clsErrorPage::GetStatusMessage(int Status)
     if (_Message.count(Status))
         return  _Message[Status];
     return ("Unknown Status");
+}
+void clsErrorPage::SetType(std::string Type) 
+{
+    _Type = Type;
 }
  std::string clsErrorPage::GetBody(int Status)
  {
@@ -69,12 +75,13 @@ std::string clsErrorPage::GetStatusMessage(int Status)
      _Message[501] = "Not Implemented";
  }
  
- std::string clsErrorPage::ResponseError(std::string Type, int Status)
+ std::string clsErrorPage::ResponseError(int Status)
  {
-    _Status = Status;
+    if (Status >= 0)
+        _Status = Status;
     std::stringstream Response;
     std::string Body = GetBody(Status);
-    std::string Headers = HeadersErrorResponse(Type, Body.size());
+    std::string Headers = HeadersErrorResponse(_Type, Body.size());
     Response << Headers << Body;
     return (Response.str());
  }

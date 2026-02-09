@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:22:46 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/08 17:25:04 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/09 14:28:35 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ enum eMod{STATIC, ERROR, UPLOAD, AUTOINDEX, DIRECTION, DELETE, CHUNK, CGI};
 #include "../response/clsResponse.hpp"
 #include "../cgi/clsParseOutCGI.hpp"
 #include "../cgi/clsCGI.hpp"
+#include "../Data/Data.hpp"
 #include "clsMainProcess.hpp"
 #include "../helperfunction/HelperString.hpp"
 #include <fcntl.h>

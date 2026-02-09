@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 14:39:25 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/08 18:48:36 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/09 20:21:41 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,24 @@ class clsResponse
     private:
         short _Mod;
         int _Status;
+        int _BodySize;
         std::string _Body;
-        clsErrorPage ErrorPage;
-        std::map <std::string, std::string> HeaderFeild;
+        std::string _Type;
+        clsErrorPage _ErrorPage;
+        std::vector <std::string> _HeaderFeild;
         int _Fd;
     public:
-        std::string MakeResponse(std::string Type, size_t Size, std::string Body);
-        std::string HeadersErrorResponse(std::string Type, size_t Size);
+        clsResponse();
+        std::string MakeResponse();
         std::string InitialHeaders(std::string Type, size_t Size);
-        bool Transfer_Encoding();
-        bool ContentLength();
-        bool Status();
-        bool Connection();
-        bool ContentType();
-        bool Redirction();
-        bool StoredInFileOrStr();
-}
+        void Status();
+        void ContentLength();
+        void ContentType();
+        void Connection();
+        void Redirction();
+        void Transfer_Encoding();
+        void StoredInFileOrStr();
+        ~clsResponse();
+
+};
 #endif
