@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 14:39:45 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/07 11:04:20 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/10 17:38:24 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ std::string clsParseOutCGI::BuilResponsedredirection()
     else if(!CountValidHeader)
         ;// problem access file in config
     else
-        return ErrorPage.ResponseError("text/html",500);
+        return ErrorPage.ResponseError(500);
 }
 
 void clsParseOutCGI::ReceivingData(std::string &Data)

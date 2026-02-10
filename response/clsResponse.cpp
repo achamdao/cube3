@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 14:39:28 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/09 20:23:08 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/10 18:08:44 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,12 @@ std::string clsResponse::MakeResponse()
     return Headers.str();
 }
 
-std::string clsResponse::InitialHeaders(std::string Type, size_t Size)
+std::string clsResponse::InitialHeaders()
 {
-    
+    Status();
+    ContentLength();
+    ContentType();
+    Connection();
 }
 
 void clsResponse::Status()
@@ -76,5 +79,26 @@ void clsResponse::Connection()
     _HeaderFeild.push_back(Headers.str());
 }
 
+void clsResponse::Transfer_Encoding()
+{
+    std::stringstream Headers;
+    if (_Mod != CHUNK)
+        return;
+    Headers << "Transfer-Encoding: chunked\r\n";
+    _HeaderFeild.push_back(Headers.str());
+}
 
-
+void clsResponse::Redirction()
+{
+    std::stringstream Headers;
+    if (_Mod != REDIRECTION)
+        return;
+    Headers << "Location: "<<"..."<<"\r\n";
+    _HeaderFeild.push_back(Headers.str());
+}
+void clsResponse::Date()
+{
+    std::stringstream Headers;
+    Headers << "Date: "<< DateTime() <<"\r\n";     
+    _HeaderFeild.push_back(Headers.str());
+}

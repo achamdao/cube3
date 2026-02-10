@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 15:43:09 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/08 19:01:46 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/10 19:01:34 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void clsMainProcess::PartRedirection()
 {
     _Status = (IsMyhost)? 302 : 301;
-    _Mod = DIRECTION
+    _Mod = REDIRECTION
     Response.MakeResponse(Status, Data);
 }
 

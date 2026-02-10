@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 20:47:16 by achamdao          #+#    #+#             */
-/*   Updated: 2026/01/22 18:08:09 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/10 18:48:07 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,4 +200,11 @@ std::string GetNextLine(int FD, std::string &BigData, size_t Size)
         BigData.clear();
     }
     return CleanLine;
+}
+
+std::string DateTime() 
+{
+    time_t Time = time(0);
+    std::string DateTime = ctime(&Time);
+    return DateTime;
 }

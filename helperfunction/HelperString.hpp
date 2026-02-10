@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 20:34:41 by achamdao          #+#    #+#             */
-/*   Updated: 2026/01/22 18:07:02 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/10 18:28:36 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ std::string  TrimStr(std::string Str,const std::string &Sep);
 bool IsStringDigit(const std::string &StringDigit);
 bool Iswhaitspace(char C);bool CmpStr(const std::string &Str1, const std::string &Str2, bool Switch);
 size_t FindCRLF(const std::string &Str, const std::string &CRLF);
+std::string DateTime();
 
 #endif

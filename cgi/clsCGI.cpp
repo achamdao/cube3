@@ -6,11 +6,11 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 14:40:02 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/08 17:31:49 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/10 18:45:35 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../mainprocess/Webserv.hpp"
+#include "clsCGI.hpp"
 
 long long clsCGI::GetCurrentTime() 
 {
@@ -19,7 +19,7 @@ long long clsCGI::GetCurrentTime()
     return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 }
 
-int clsCGI::RunCGI(std::string NameFile, clsData Data, int TimeOut)
+int clsCGI::RunCGI(std::string NameFile, Data OData, int TimeOut)
 {
     int status;
     int exit_code;

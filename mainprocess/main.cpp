@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 14:39:33 by achamdao          #+#    #+#             */
-/*   Updated: 2026/01/22 21:29:02 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/10 18:05:29 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,13 @@ std::string GenerateTestString(int Length)
     return std::string(Length, 'A');
 }
 
-long long getCurrentTime() 
-{
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    return (tv.tv_sec * 1000 * 1000) + (tv.tv_usec);
-}
+
+
 int main(void)
 {
-    std::string Str = "achraf : lalalalalalala\r\n      \t    ";
-    size_t POS = 0;
-    if ((POS = FindCRLF(Str, "\r\n")) != std::string::npos)
-        cout << Str.substr(0, POS)<<",,"<< endl;
-    else
-        cout << "CRLF NOT found "<< endl;
-        
+    time_t t = time(0); // get time now
+    std::string dt = ctime(&t); // convert in string form
+    cout << "Local date and time is: " << DateTime() << "\n";
+    // converting now to tm struct for UTC date/time
     return 0;
 }

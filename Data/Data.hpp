@@ -6,14 +6,17 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 14:23:20 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/09 17:29:47 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/10 18:54:09 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # ifndef DATA_HPP
 # define DATA_HPP
 
-#include "../mainprocess/Webserv.hpp"
+#include <vector>
+#include <iostream>
+#include <map>
+#include <sys/time.h>
 
 class LocationConfig 
 {
@@ -22,7 +25,7 @@ class LocationConfig
     std::string                  root;
     int                     allow_methods;
     bool                    autoindex;
-    int                     return_status = 0;
+    int                     return_status ;
     std::string                  return_url;
     std::string                  upload_store;
     std::map<std::string, std::string> cgi_extension;
@@ -43,7 +46,6 @@ class ServerConfig
     std::map<int, std::string>   error_page;
     std::vector<LocationConfig> locations;
 };
-std::vector<ServerConfig> servers;
 
 class Data
 {
