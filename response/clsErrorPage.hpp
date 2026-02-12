@@ -6,16 +6,14 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:33:05 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/09 20:06:12 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/11 16:05:48 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # ifndef CLS_ERROR_PAGE_HPP
 # define CLS_ERROR_PAGE_HPP
 
-#include <iostream>
-#include <sstream>
-#include <map>
+#include "../mainprocess/librarys.hpp"
 
 class clsErrorPage
 {

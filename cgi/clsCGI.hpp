@@ -6,19 +6,15 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 14:39:09 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/10 18:52:25 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/11 16:04:30 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # ifndef CLS_CGI_HPP
 # define CLS_CGI_HPP
 
-#include <fcntl.h>
-#include <unistd.h>
-#include <iostream>
-#include <ctime>
-#include <sys/time.h>
 #include "../Data/Data.hpp"
+#include "../mainprocess/librarys.hpp"
 
 class clsCGI
 {

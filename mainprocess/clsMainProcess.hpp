@@ -6,12 +6,16 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 15:40:27 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/10 19:03:42 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/11 16:09:22 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # ifndef CLS_MAIN_PROCESS_HPP
 # define CLS_MAIN_PROCESS_HPP
+
+#include "../response/clsResponse.hpp"
+#include "../cgi/clsParseOutCGI.hpp"
+#include "../cgi/clsCGI.hpp"
 
 class clsMainProcess
 {

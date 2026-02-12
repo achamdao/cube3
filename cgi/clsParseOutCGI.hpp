@@ -6,20 +6,16 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 14:39:48 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/10 19:06:09 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/11 16:05:00 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # ifndef CLS_PARSE_OUT_CGI_HPP
 # define CLS_PARSE_OUT_CGI_HPP
 
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <map>
-#include <vector>
+#include "../mainprocess/librarys.hpp"
+
 #include "../response/clsErrorPage.hpp"
-#include "../helperfunction/HelperString.hpp"
 
 class clsParseOutCGI
 {

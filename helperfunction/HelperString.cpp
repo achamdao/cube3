@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 20:47:16 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/10 18:48:07 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/12 14:53:22 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,9 +202,44 @@ std::string GetNextLine(int FD, std::string &BigData, size_t Size)
     return CleanLine;
 }
 
+std::string GTMHTTP( tm* GMT)
+{
+    std::string Str[7] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+    std::string Months[12] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+    std::stringstream StrGTMHTTP;
+    StrGTMHTTP << Str[GMT->tm_wday] << ", ";
+    StrGTMHTTP << GMT->tm_mday << " ";
+    StrGTMHTTP << Months[GMT->tm_mon] << " ";
+    StrGTMHTTP << GMT->tm_year + 1900<< " ";
+    StrGTMHTTP << GMT->tm_hour << ":"<< GMT->tm_min<< ":"<<GMT->tm_sec;
+    StrGTMHTTP << " GMT";
+    return StrGTMHTTP.str();
+}
+
 std::string DateTime() 
 {
     time_t Time = time(0);
-    std::string DateTime = ctime(&Time);
+    tm* GMT = gmtime(&Time);
+    std::string DateTime = GTMHTTP(GMT);
     return DateTime;
+}
+
+std::string	Convert_Hex(const std::string &Str, int Num)
+{
+	int		i = 0;
+	std::string	MaxHex;
+	std::string	Result;
+
+	if (Num == 0)
+		return ("0");
+	while (Num > 0)
+	{
+		MaxHex += Str[Num % 16];
+		Num /= 16;
+	}
+    i = MaxHex.size() - 1;
+	while (i >= 0)
+		Result += MaxHex[i--];
+	return (Result);
 }
