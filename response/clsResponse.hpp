@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 14:39:25 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/12 16:39:56 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/14 18:51:29 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@
 class clsResponse
 {
     private:
-        short _Mod;
+        std::map <short, short> _Mod;
         int _Status;
         int _BodySize;
+        bool _Connection;
         std::string _Body;
         std::string _Type;
         clsErrorPage _ErrorPage;
@@ -34,7 +35,8 @@ class clsResponse
         void Status();
         void ContentLength();
         void ContentType();
-        void Connection();
+        void ConnectionKeepAlive();
+        void ConnectionClose();
         void Redirction();
         void Transfer_Encoding();
         void StoredInFileOrStr();
@@ -43,6 +45,7 @@ class clsResponse
         void Server();
         void RetryAfter();
         void Allow();
+        std::string ErrorRespnseHandling();
         std::string ChunkData(const std::string &Str);
         ~clsResponse();
 

@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 14:39:28 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/12 17:25:48 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/14 18:55:21 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 clsResponse::clsResponse()
 {
-    _Mod = 0;
     _Status = 0;
     _BodySize = 0;
     _FileName = "";
@@ -25,11 +24,10 @@ clsResponse::clsResponse()
 std::string clsResponse::MakeResponse()
 {
     std::stringstream Headers;
-    if (_Mod == ERROR)
+    if (_Mod.count(ERROR))
     {
         _HeaderFeild.clear();
-        _ErrorPage.SetType(_Type);
-        return _ErrorPage.ResponseError(_Status);
+        return ErrorRespnseHandling();
     }
     for (int i = 0; i < _HeaderFeild.size() ;i++)
         Headers << _HeaderFeild[i];
@@ -40,15 +38,34 @@ std::string clsResponse::MakeResponse()
 void clsResponse::InitialHeaders()
 {
     Status();
-    ContentLength();
-    ContentType();
-    Connection();
-    Transfer_Encoding();
-    Redirction();
+    if (!_Mod.count(CHUNK))
+        ContentLength();
+    if (!_BodySize)
+        ContentType();
+    if (_Mod.count(CHUNK))
+        Transfer_Encoding();
+    if (_Mod.count(REDIRECTION) )
+        Redirction();
+    if (_Status == 429 || _Status == 301 || _Status == 503)
+        Allow();
+    ConnectionKeepAlive();
     Date();
     CachControl();
     Server();
-    Allow();
+}
+
+std::string clsResponse::ErrorRespnseHandling()
+{
+    // search about error in config if not exist
+    _ErrorPage.SetType(_Type);
+    return _ErrorPage.ResponseError(_Status);
+}
+
+void clsResponse::ConnectionClose()
+{
+    std::stringstream Headers;
+    Headers << "Connection: "<< "Close"<<"\r\n";
+    _HeaderFeild.push_back(Headers.str());
 }
 
 void clsResponse::Status()
@@ -61,35 +78,25 @@ void clsResponse::Status()
 void clsResponse::ContentLength()
 {
     std::stringstream Headers;
-    if (_Mod == CHUNK)
-        return;
     Headers << "Content-Length: "<< _BodySize<<"\r\n";
     _HeaderFeild.push_back(Headers.str());
 }
 void clsResponse::ContentType()
 {
     std::stringstream Headers;
-    if (!_BodySize)
-        return;
     Headers << "Content-Type: "<< _Type<<"\r\n";
     _HeaderFeild.push_back(Headers.str());
 }
 
-void clsResponse::Connection()
+void clsResponse::ConnectionKeepAlive()
 {
     std::stringstream Headers;
-    if (_Mod == ERROR)
-        Headers << "Connection: "<< "close"<<"\r\n";
-    else
-        Headers << "Connection: "<< "keep-alive"<<"\r\n";
+    Headers << "Connection: "<< "keep-alive"<<"\r\n";
     _HeaderFeild.push_back(Headers.str());
 }
-
 void clsResponse::Transfer_Encoding()
 {
     std::stringstream Headers;
-    if (_Mod != CHUNK)
-        return;
     Headers << "Transfer-Encoding: chunked\r\n";
     _HeaderFeild.push_back(Headers.str());
 }
@@ -97,8 +104,6 @@ void clsResponse::Transfer_Encoding()
 void clsResponse::Redirction()
 {
     std::stringstream Headers;
-    if (_Mod != REDIRECTION)
-        return;
     Headers << "Location: "<<"..."<<"\r\n";
     _HeaderFeild.push_back(Headers.str());
 }
@@ -125,8 +130,6 @@ void clsResponse::Server()
 void clsResponse::RetryAfter()
 {
     std::stringstream Headers;
-    if (_Status != 429 && _Status != 301 && _Status != 503)
-        return;
     Headers << "Retry-After: "<< 120 << "\r\n";
     _HeaderFeild.push_back(Headers.str());
 }
@@ -147,7 +150,7 @@ void clsResponse::StoredInFileOrStr()
     int FD = open(FileName.c_str(), O_RDONLY, 644);
     if (FD < 0)
     {
-        _Mod = ERROR;
+        _Mod[ERROR] = ERROR;
         return ;
     }
     Data = ReadData(FD, Data, 100);
@@ -156,7 +159,7 @@ void clsResponse::StoredInFileOrStr()
         _BodySize += Data.size();
         if (_BodySize > 2000)
         {
-            _Mod = CHUNK;
+            _Mod[CHUNK] = CHUNK;
             _Body.clear();
             _Body = "";
             _FileName = FileName;
@@ -183,5 +186,11 @@ std::string clsResponse::ChunkData(const std::string &Str)
 
 clsResponse::~clsResponse()
 {
-    
+    _HeaderFeild.clear();
+    _Mod.clear();
+    _Status = 0;
+    _BodySize = 0;
+    _FileName = "";
+    _Body = "";
+    _Type = "";
 }
