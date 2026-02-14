@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 14:39:28 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/14 18:55:21 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/14 19:01:14 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ clsResponse::clsResponse()
 std::string clsResponse::MakeResponse()
 {
     std::stringstream Headers;
+    // if we dont have body just return headers
+    StoredInFileOrStr();
+    InitialHeaders();
     if (_Mod.count(ERROR))
     {
         _HeaderFeild.clear();
