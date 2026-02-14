@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 14:39:28 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/14 19:01:14 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/14 19:05:34 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,6 @@ void clsResponse::StoredInFileOrStr()
         {
             _Mod[CHUNK] = CHUNK;
             _Body.clear();
-            _Body = "";
             _FileName = FileName;
             close(FD);
             return ;
@@ -185,6 +184,11 @@ std::string clsResponse::ChunkData(const std::string &Str)
     NewStr += Str;
     NewStr += "\r\n";
     return (NewStr);
+}
+
+std::string GetTypeData(std::string Type)
+{
+    // get types from file and stored in map
 }
 
 clsResponse::~clsResponse()
