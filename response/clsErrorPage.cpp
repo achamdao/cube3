@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:48:27 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/09 20:07:01 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/15 14:58:09 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void clsErrorPage::SetType(std::string Type)
      Headers << "Content-Type: " << Type << "\r\n";
      Headers << "Content-Length: " << Size << "\r\n";
      Headers << "Server: Webserv/1.0\r\n";
+     // add more headers as Date and cach-control
      Headers <<  "Connection: Close\r\n";
      Headers << "\r\n";
      return (Headers.str());
@@ -83,5 +84,6 @@ void clsErrorPage::SetType(std::string Type)
     std::string Body = GetBody(Status);
     std::string Headers = HeadersErrorResponse(_Type, Body.size());
     Response << Headers << Body;
+    // ram problem body big
     return (Response.str());
  }

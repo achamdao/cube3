@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 14:39:33 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/12 14:51:04 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/15 15:45:40 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int main(void)
      tm* gmtm = gmtime(&t);
     char Str[100];
     clsResponse Response;
-    cout <<  DateTime() <<"\n";
+    cout <<  Response.ChunkData("achraf hamdaoui skjsjshjsksjkskjsjsjkssss") <<"\n";
     // converting now to tm struct for UTC date/time
     return 0;
 }

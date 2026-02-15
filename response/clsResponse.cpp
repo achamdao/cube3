@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 14:39:28 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/14 19:05:34 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/15 15:46:26 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,10 @@ std::string clsResponse::MakeResponse()
     std::stringstream Headers;
     // if we dont have body just return headers
     StoredInFileOrStr();
-    InitialHeaders();
-    if (_Mod.count(ERROR))
-    {
-        _HeaderFeild.clear();
+    if (!_Mod.count(ERROR))
+        InitialHeaders();
+    else if (_Mod.count(ERROR))
         return ErrorRespnseHandling();
-    }
     for (int i = 0; i < _HeaderFeild.size() ;i++)
         Headers << _HeaderFeild[i];
     Headers << "\r\n";
@@ -49,8 +47,11 @@ void clsResponse::InitialHeaders()
         Transfer_Encoding();
     if (_Mod.count(REDIRECTION) )
         Redirction();
-    if (_Status == 429 || _Status == 301 || _Status == 503)
+    if (_Status == 405)
         Allow();
+    if (_Status == 429 || _Status == 301 || _Status == 503)
+        RetryAfter();
+    // if the client want close conection we called function Close connection
     ConnectionKeepAlive();
     Date();
     CachControl();
@@ -107,6 +108,7 @@ void clsResponse::Transfer_Encoding()
 void clsResponse::Redirction()
 {
     std::stringstream Headers;
+    // get data from config file
     Headers << "Location: "<<"..."<<"\r\n";
     _HeaderFeild.push_back(Headers.str());
 }
@@ -140,8 +142,6 @@ void clsResponse::RetryAfter()
 void clsResponse::Allow()
 {
     std::stringstream Headers;
-    if (_Status != 405)
-        return;
     Headers << "Allow: "<< "GET , POST , DELETE" << "\r\n";
     _HeaderFeild.push_back(Headers.str());
 }
@@ -189,6 +189,7 @@ std::string clsResponse::ChunkData(const std::string &Str)
 std::string GetTypeData(std::string Type)
 {
     // get types from file and stored in map
+    return "";
 }
 
 clsResponse::~clsResponse()
