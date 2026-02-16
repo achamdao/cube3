@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 14:39:28 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/15 15:46:26 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/16 14:25:09 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,23 @@ clsResponse::clsResponse()
     _Status = 0;
     _BodySize = 0;
     _FileName = "";
+    _FileFromDisk = "";
     _Body = "";
     _Type = "";
+    _IsConnection = false;
 }
 
 std::string clsResponse::MakeResponse()
 {
     std::stringstream Headers;
-    // if we dont have body just return headers
-    StoredInFileOrStr();
+    IndexFiles();
+    if (!_Mod.count(ERROR))
+        StoredInFileOrStr();
     if (!_Mod.count(ERROR))
         InitialHeaders();
-    else if (_Mod.count(ERROR))
+    if (_Mod.count(ERROR))
         return ErrorRespnseHandling();
-    for (int i = 0; i < _HeaderFeild.size() ;i++)
+    for (size_t i = 0; i < _HeaderFeild.size() ;i++)
         Headers << _HeaderFeild[i];
     Headers << "\r\n";
     return Headers.str();
@@ -148,15 +151,18 @@ void clsResponse::Allow()
 
 void clsResponse::StoredInFileOrStr()
 {
-    std::string FileName = "file";
+    std::string _FileFromDisk = "file";
     std::string Data;
-    int FD = open(FileName.c_str(), O_RDONLY, 644);
+    if (_FileFromDisk == "")
+        return ;                                         
+    int FD = open(_FileFromDisk.c_str(), O_RDONLY, 644);
     if (FD < 0)
     {
         _Mod[ERROR] = ERROR;
+        _Status = 500;
         return ;
     }
-    Data = ReadData(FD, Data, 100);
+    ReadData(FD, Data, 100);
     while(Data.empty())
     {
         _BodySize += Data.size();
@@ -164,12 +170,12 @@ void clsResponse::StoredInFileOrStr()
         {
             _Mod[CHUNK] = CHUNK;
             _Body.clear();
-            _FileName = FileName;
+            _FileName = _FileFromDisk;
             close(FD);
             return ;
         }
         _Body += Data;
-        Data = ReadData(FD, Data, 100);
+        ReadData(FD, Data, 100);
     }
 }
 
@@ -186,12 +192,70 @@ std::string clsResponse::ChunkData(const std::string &Str)
     return (NewStr);
 }
 
-std::string GetTypeData(std::string Type)
+void clsResponse::IndexFiles()
 {
-    // get types from file and stored in map
-    return "";
+    std::vector<std::string> IndexsFile;
+    bool Index = false;
+    if (!Index)
+        return ;
+    for (size_t i = 0; i < IndexsFile.size();i++)
+    {
+        if (!access(IndexsFile[i].c_str(),F_OK))
+        {
+            _FileFromDisk = IndexsFile[i];
+            return ;
+        }
+    }
+    _Mod[ERROR] = ERROR;
+    _Status = 404;
 }
 
+std::string clsResponse::GetTypeData(std::string Type)
+{
+    // get types from file and stored in map
+    StoredType(_TypeContent, "response/file.type");
+    StoredDefaultType();
+    if (_TypeContent.count(Type))
+            return  _TypeContent[Type];
+    return "application/octet-stream";
+}
+void clsResponse::StoredDefaultType()
+{
+    if (_TypeContent.empty())
+    {
+        _TypeContent[".html"] = "text/html";
+        _TypeContent[".htm"]  = "text/html";
+        _TypeContent[".css"]  = "text/css";
+        _TypeContent[".js"]   = "text/javascript";
+        _TypeContent[".jpg"]  = "image/jpeg";
+        _TypeContent[".jpeg"] = "image/jpeg";
+        _TypeContent[".png"]  = "image/png";
+        _TypeContent[".txt"]  = "text/plain";
+    }
+ }
+std::string clsResponse::GetBody()
+{
+    return _Body;
+}
+
+std::string clsResponse::GetFileName()
+{
+    return _FileName;
+}
+
+void clsResponse::SetStatus(short Status)
+{
+    _Status = Status;
+}
+
+void clsResponse::SetMod(short Mod)
+{
+    _Mod[Mod] = Mod;
+}
+void clsResponse::SetFileFromDisk(std::string FileFromDisk)
+{
+    _FileFromDisk = FileFromDisk ;
+}
 clsResponse::~clsResponse()
 {
     _HeaderFeild.clear();

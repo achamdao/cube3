@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 14:39:25 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/14 18:51:29 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/16 13:59:34 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,25 @@ class clsResponse
         std::map <short, short> _Mod;
         int _Status;
         int _BodySize;
-        bool _Connection;
+        bool _IsConnection;
         std::string _Body;
         std::string _Type;
         clsErrorPage _ErrorPage;
         std::vector <std::string> _HeaderFeild;
         std::string  _FileName;
+        std::string  _FileFromDisk;
+        std::map<std::string, std::string> _TypeContent;
+
+        void StoredDefaultType();
+        std::string GetTypeData(std::string Type);
     public:
         clsResponse();
+        std::string GetBody();
+        std::string GetFileName();
+        void SetStatus(short Status);
+        void SetFileFromDisk(std::string FileFromDisk);
+        void SetMod(short Mode);
+        bool GetIsConnection();
         std::string MakeResponse();
         void InitialHeaders();
         void Status();
@@ -45,6 +56,7 @@ class clsResponse
         void Server();
         void RetryAfter();
         void Allow();
+        void IndexFiles();
         std::string ErrorRespnseHandling();
         std::string ChunkData(const std::string &Str);
         ~clsResponse();
