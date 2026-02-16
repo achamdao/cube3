@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:48:27 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/15 14:58:09 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/16 21:59:33 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,19 @@ void clsErrorPage::SetType(std::string Type)
  }
  std::string clsErrorPage::HeadersErrorResponse(std::string Type, size_t Size)
  {
-     std::stringstream Headers;
-     Headers << "HTTP/1.1 "<< _Status << " " <<  GetStatusMessage(_Status) <<"\r\n";
-     Headers << "Content-Type: " << Type << "\r\n";
-     Headers << "Content-Length: " << Size << "\r\n";
-     Headers << "Server: Webserv/1.0\r\n";
-     // add more headers as Date and cach-control
-     Headers <<  "Connection: Close\r\n";
-     Headers << "\r\n";
-     return (Headers.str());
+    std::stringstream Headers;
+    Headers << "HTTP/1.1 "<< _Status << " " <<  GetStatusMessage(_Status) <<"\r\n";
+    Headers << "Content-Type: " << Type << "\r\n";
+    Headers << "Content-Length: " << Size << "\r\n";
+    Headers << "Server: Webserv/1.0\r\n";
+    Headers << "Date: " << DateTime() << "\r\n";
+    if (_Status == 405)
+       Headers <<  "Allow: "<< "GET , POST , DELETE" << "\r\n";
+    if (_Status == 429 || _Status == 301 || _Status == 503)
+        Headers << "Retry-After: "<< 120 << "\r\n";
+    Headers <<  "Connection: Close\r\n";
+    Headers << "\r\n";
+    return (Headers.str());
  }
  void clsErrorPage::StoredBodys()
  {
@@ -80,10 +84,5 @@ void clsErrorPage::SetType(std::string Type)
  {
     if (Status >= 0)
         _Status = Status;
-    std::stringstream Response;
-    std::string Body = GetBody(Status);
-    std::string Headers = HeadersErrorResponse(_Type, Body.size());
-    Response << Headers << Body;
-    // ram problem body big
-    return (Response.str());
+    return (HeadersErrorResponse(_Type, GetBody(Status).size()));
  }

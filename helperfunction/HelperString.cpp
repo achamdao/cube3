@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 20:47:16 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/15 20:38:20 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/16 20:59:50 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,21 +253,33 @@ void StoredType(std::map<std::string, std::string> &StoredType, const std::strin
     std::string Value;
     int FD = open(FileName.c_str(), O_RDONLY, 644);
     if (FD < 0)
+    {
+        StoredType.clear();
         return ;
+    }
     Line = GetNextLine(FD, Buffer, 100);
     while (!Line.empty())
     {
         Line = TrimStr(Line, "\t ");
         Split1 = Split(Line, ':', 0);
         if (Split1.empty() || Split1.size() != 2)
+        {
+            StoredType.clear();
             return ;
+        }
         Key = Split1[0];
         Value = Split1[1];
         if (Key[0] != '.')
+        {
+            StoredType.clear();
             return ;
+        }
         Key = Key.substr(1, Key.size());
         if (Key == "")
+        {
+            StoredType.clear();
             return ;
+        }
         Key =Split1[0];
         StoredType[Key] = Value;
         Line = GetNextLine(FD, Buffer, 100);

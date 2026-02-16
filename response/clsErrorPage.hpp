@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:33:05 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/11 16:05:48 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/16 21:56:14 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ class clsErrorPage
         std::string HeadersErrorResponse(std::string Type, size_t Size);
         void StoredBodys();
         void StoredMessage();
+        void Allow();
     public:
         void SetType(std::string Type);
         std::string GetType();

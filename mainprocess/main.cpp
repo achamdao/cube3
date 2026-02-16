@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 14:39:33 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/15 20:39:12 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/16 21:59:54 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,12 @@ std::string GenerateTestString(int Length)
 
 int main(void)
 {
-    std::map<std::string, std::string> Types;
-    std::map<std::string, std::string>::iterator TypesI;
-    StoredType(Types,"response/file.type");
-    if (Types.empty())
-        cout << "is empty" << endl;
-    for (TypesI = Types.begin(); TypesI != Types.end(); TypesI++)
-        cout << "Key :" << TypesI->first <<"\n" << "Value : "<< TypesI->second << endl;
-    // converting now to tm struct for UTC date/time
+    clsResponse Response;
+    Response.SetFileFromDisk("response/file.txt");
+    Response.SetStatus(301);
+    Response.SetMod(ERROR);
+    cout << Response.MakeResponse();
+    cout << Response.GetBody();
+    cout << Response.GetFileName();
     return 0;
 }
