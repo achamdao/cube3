@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 14:39:28 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/16 22:00:31 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/17 15:07:10 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,22 @@ void clsResponse::InitialHeaders()
     Status();
     if (!_Mod.count(CHUNK))
         ContentLength();
-    if (!_BodySize)
-        _Type = "application/octet-stream";
-    ContentType();
+    if (_BodySize)
+        ContentType();
     if (_Mod.count(CHUNK))
         Transfer_Encoding();
     if (_Mod.count(REDIRECTION))
         Redirction();
-    if (_Status == 429 || _Status == 301 || _Status == 503)
-        RetryAfter();
-    // if the client want close conection we called function Close connection
     Date();
     CachControl();
     Server();
+    // if the client want close conection we called function Close connection
     ConnectionKeepAlive();
 }
 
 std::string clsResponse::ErrorRespnseHandling()
 {
-    
+    // search in class request handler for 
     _ErrorPage.SetType(GetTypeData(".html"));
     _Body = _ErrorPage.GetBody(_Status);
     return _ErrorPage.ResponseError(_Status);
@@ -68,9 +65,7 @@ std::string clsResponse::ErrorRespnseHandling()
 
 void clsResponse::ConnectionClose()
 {
-    std::stringstream Headers;
-    Headers << "Connection: "<< "Close"<<"\r\n";
-    _HeaderFeild += Headers.str();
+    _HeaderFeild += "Connection: Close\r\n";
 }
 
 void clsResponse::Status()
@@ -88,16 +83,14 @@ void clsResponse::ContentLength()
 }
 void clsResponse::ContentType()
 {
-    std::stringstream Headers;
-    Headers << "Content-Type: "<< _Type<<"\r\n";
-    _HeaderFeild += Headers.str();
+    _HeaderFeild += "Content-Type: ";
+    _HeaderFeild += _Type;
+    _HeaderFeild +=" ; charset=UTF-8\r\n";
 }
 
 void clsResponse::ConnectionKeepAlive()
 {
-    std::stringstream Headers;
-    Headers << "Connection: "<< "keep-alive"<<"\r\n";
-    _HeaderFeild += Headers.str();
+    _HeaderFeild += "Connection: keep-alive\r\n";
 }
 void clsResponse::Transfer_Encoding()
 {
@@ -122,7 +115,7 @@ void clsResponse::Date()
 void clsResponse::CachControl()
 {
     std::stringstream Headers;
-    Headers << "Cache-Control: no-cache\r\n";
+    Headers << "Cache-Control: no-store\r\n";
     _HeaderFeild += Headers.str();
 }
 
@@ -130,13 +123,6 @@ void clsResponse::Server()
 {
     std::stringstream Headers;
     Headers << "Server: Name Server\r\n";
-    _HeaderFeild += Headers.str();
-}
-
-void clsResponse::RetryAfter()
-{
-    std::stringstream Headers;
-    Headers << "Retry-After: "<< 120 << "\r\n";
     _HeaderFeild += Headers.str();
 }
 
@@ -181,7 +167,6 @@ std::string clsResponse::ChunkData(const std::string &Str)
     NewStr += "\r\n";
     return (NewStr);
 }
-
 
 std::string clsResponse::GetTypeData(std::string Type)
 {

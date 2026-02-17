@@ -6,7 +6,7 @@
 /*   By: achamdao <achamdao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:33:05 by achamdao          #+#    #+#             */
-/*   Updated: 2026/02/16 21:56:14 by achamdao         ###   ########.fr       */
+/*   Updated: 2026/02/17 14:50:13 by achamdao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,28 @@ class clsErrorPage
         std::string _Type;
         std::map<int, std::string> _Message;
         std::map<int, std::string> _Body;
+        std::string _HeaderFeild;
+        int _BodySize;
 
-        std::string HeadersErrorResponse(std::string Type, size_t Size);
+        std::string HeadersErrorResponse();
         void StoredBodys();
         void StoredMessage();
+        void Status();
+        void ContentLength();
+        void ContentType();
+        void ConnectionClose();
+        void StoredInFileOrStr();
+        void Date();
+        void Server();
         void Allow();
+        void RetryAfter();
     public:
+        clsErrorPage();
         void SetType(std::string Type);
         std::string GetType();
         std::string GetStatusMessage(int StatusCode);
         std::string GetBody(int StatusCode);
-        clsErrorPage();
         std::string ResponseError(int Status);
+        ~clsErrorPage();
 };
 #endif
